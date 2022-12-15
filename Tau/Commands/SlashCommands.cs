@@ -20,10 +20,10 @@ namespace Tau.Commands
                 .WithDescription("Tau is a general purpose bot written in C# using [DSharpPlus](https://dsharpplus.github.io/)!")
 
                 .AddField("Developers", "[hawk](https://github.com/hawwwwwk)")
-                .AddField("Very special thanks:", "A huge thank you to everyone in the [DSharpPlus Discord Server](https://discord.gg/dsharpplus) for helping me learn this library and grow without spoonfeeding me. Especially huge thanks to Naamloos and their bot [Mod Core](https://github.com/Naamloos/ModCore), which has open source code that gave me a visual reference of how I should structure my code.")
-                .AddField("Questions? Comments?", "If you're having any issues with Tau or have a suggestion, feel free to join our [Support Server](https://discord.gg/EatSTE2u)!")
+                .AddField("Very special thanks:", "A huge thank you to everyone in the [DSharpPlus Discord Server](https://discord.gg/dsharpplus) for helping me learn this library, and thanks to [Nimrod](https://discord.gg/vSmKPNd4) for letting me host on their servers.")
+                .AddField("Questions? Comments?", "If you're having any issues with Tau or have a suggestion, join our [Support Server](https://discord.gg/EatSTE2u)!")
 
-                .WithFooter("Tau v00.1")
+                .WithFooter("Tau v0.0.1")
 
                 .Build();
 
