@@ -364,3 +364,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /Tau/.HiddenToken.cs
 /Tau/.HiddenToken.cs
+/Tau/Config/config.cs
+/Tau/Config/Config.json
+/Tau/Config/TESTConfig.json
