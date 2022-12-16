@@ -56,9 +56,9 @@ namespace Tau
                     Console.ResetColor();
                 }
             }
+            var asm = Assembly.GetExecutingAssembly();
 #if DEBUG
             // test guild
-            var asm = Assembly.GetExecutingAssembly();
             slash.RegisterCommands(asm, Convert.ToUInt64(ConfigInfo.TestGuildID));
 #else
             // global
