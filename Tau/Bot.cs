@@ -3,9 +3,11 @@ using System;
 using System.Threading.Tasks;
 using DSharpPlus.SlashCommands;
 using System.Net;
-using static System.Net.Mime.MediaTypeNames;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.IO;
+using System.Text.Json;
+using Tau.Config;
 
 namespace Tau
 {
@@ -15,13 +17,23 @@ namespace Tau
         {
             MainAsync().GetAwaiter().GetResult();
         }
-
         static async Task MainAsync()
         {
-
+#if DEBUG
+            string text = File.ReadAllText("./Config/TESTConfig.json");
+#else
+            string text = File.ReadAllText("./Config/Config.json");
+#endif
+            var ConfigInfo = JsonSerializer.Deserialize<config>(text);
+            if (ConfigInfo == null)
+            {
+                Console.WriteLine("Is there a config file?"); // i only added this so it'd stop saying "wHaT iF iTs NuLl"
+                Console.ReadLine();
+                System.Environment.Exit(1);
+            }
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = HiddenToken.myToken,
+                Token = ConfigInfo.BotToken,
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.AllUnprivileged
             });
@@ -31,9 +43,9 @@ namespace Tau
             // clear command list with PUT request
             using (var httpClient = new HttpClient())
             {
-                using (var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/1050971170448625695/commands"))
+                using (var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + ConfigInfo.ApplicationID + "/commands"))
                 {
-                    request.Headers.TryAddWithoutValidation("Authorization", "Bot " + HiddenToken.myToken);
+                    request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ConfigInfo.BotToken);
 
                     request.Content = new StringContent("[]");
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -46,9 +58,8 @@ namespace Tau
             }
 #if DEBUG
             // test guild
-
             var asm = Assembly.GetExecutingAssembly();
-            slash.RegisterCommands(asm, 1050971027632558110);
+            slash.RegisterCommands(asm, Convert.ToUInt64(ConfigInfo.TestGuildID));
 #else
             // global
             slash.RegisterCommands(asm);
@@ -61,6 +72,15 @@ namespace Tau
             Console.ResetColor();
 
             await Task.Delay(-1);
+        }
+         static void ImportFromConfig()
+        {
+#if DEBUG
+            string text = File.ReadAllText("@./TESTConfig.json");
+#else
+            string text = File.ReadAllText("@./Config.json");
+#endif
+            var ConfigInfo = JsonSerializer.Deserialize<config>(text);
         }
     }
 }
