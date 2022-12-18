@@ -1,5 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using DSharpPlus.Interactivity;
+using Tau.Config;
 
 // todo, seperate slash command groups (not [slashcommandgroup] they suck) into seperate files, basically abstract a lil.
 
