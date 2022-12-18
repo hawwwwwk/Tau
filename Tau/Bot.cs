@@ -96,14 +96,5 @@ namespace Tau
                 }
             }
         }
-        static void ImportFromConfig()
-        {
-#if DEBUG
-            string text = File.ReadAllText("@./TESTConfig.json");
-#else
-            string text = File.ReadAllText("@./Config.json");
-#endif
-            var ConfigInfo = JsonSerializer.Deserialize<config>(text);
-        }
     }
 }
