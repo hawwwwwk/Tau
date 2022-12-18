@@ -62,39 +62,31 @@ namespace Tau
         // i feel ashamed i can't make the next two task functions into one, i gotta get good
         static async Task UpdateGlobalCommands(string? AApplicationID, string? ABotToken)
         {
-            using (var httpClient = new HttpClient())
-            {
-                using (var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + AApplicationID + "/commands"))
-                {
-                    request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ABotToken);
+            using var httpClient = new HttpClient();
+            using var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + AApplicationID + "/commands");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ABotToken);
 
-                    request.Content = new StringContent("[]");
-                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+            request.Content = new StringContent("[]");
+            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
-                    var response = await httpClient.SendAsync(request);
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine("Cleared Global Commands");
-                    Console.ResetColor();
-                }
-            }
+            var response = await httpClient.SendAsync(request);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Cleared Global Commands");
+            Console.ResetColor();
         }
         static async Task UpdateTestGuildCommands(string? AAplicationID, string? ABotToken, string? ATestGuildID)
         {
-            using (var httpClient = new HttpClient())
-            {
-                using (var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + AAplicationID + "/guilds/" + ATestGuildID + "/commands"))
-                {
-                    request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ABotToken);
+            using var httpClient = new HttpClient();
+            using var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + AAplicationID + "/guilds/" + ATestGuildID + "/commands");
+            request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ABotToken);
 
-                    request.Content = new StringContent("[]");
-                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+            request.Content = new StringContent("[]");
+            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
-                    var response = await httpClient.SendAsync(request);
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine("Cleared Guild Commands");
-                    Console.ResetColor();
-                }
-            }
+            var response = await httpClient.SendAsync(request);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Cleared Guild Commands");
+            Console.ResetColor();
         }
     }
 }
