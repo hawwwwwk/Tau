@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.SlashCommands;
-using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using Tau.Config;
 
@@ -26,8 +26,9 @@ namespace Tau
             {
                 Console.WriteLine("Is there a config file?");
                 Console.ReadLine();
-                System.Environment.Exit(1);
+                Environment.Exit(1);
             }
+
 
             await UpdateCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken);
             await UpdateCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken, ConfigInfo.TestGuildID);
@@ -59,37 +60,20 @@ namespace Tau
 
             await Task.Delay(-1);
         }
-        
+
         // Clears old commands from slashcommand handler.
         static async Task UpdateCommands(string? applicationID, string? botToken, string? testGuildID = null)
         {
-            using var httpClient = new HttpClient();
-            string url;
-            if (testGuildID == null)
+            using var client = new HttpClient();
+            var url = $"https://discord.com/api/v10/applications/{applicationID}{(testGuildID == null ? "/commands" : $"/guilds/{testGuildID}/commands")}";
+            var request = new HttpRequestMessage(HttpMethod.Put, url)
             {
-                url = "https://discord.com/api/v10/applications/" + applicationID + "/commands";
-            }
-            else
-            {
-                url = "https://discord.com/api/v10/applications/" + applicationID + "/guilds/" + testGuildID + "/commands";
-            }
-
-            using var request = new HttpRequestMessage(new HttpMethod("PUT"), url);
-            request.Headers.TryAddWithoutValidation("Authorization", "Bot " + botToken);
-
-            request.Content = new StringContent("[]");
-            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
-            var response = await httpClient.SendAsync(request);
+                Headers = { { "Authorization", $"Bot {botToken}" } },
+                Content = new StringContent("[]", Encoding.UTF8, "application/json")
+            };
+            await client.SendAsync(request);
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            if (testGuildID == null)
-            {
-                Console.WriteLine("Cleared Global Commands");
-            }
-            else
-            {
-                Console.WriteLine("Cleared Guild Commands");
-            }
+            Console.WriteLine(testGuildID == null ? "Cleared Global Commands" : "Cleared Guild Commands");
             Console.ResetColor();
         }
     }
