@@ -29,8 +29,8 @@ namespace Tau
                 System.Environment.Exit(1);
             }
 
-            await UpdateGlobalCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken);
-            await UpdateTestGuildCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken, ConfigInfo.TestGuildID);
+            await UpdateCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken);
+            await UpdateCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken, ConfigInfo.TestGuildID);
 
             var discord = new DiscordClient(new DiscordConfiguration()
             {
@@ -59,33 +59,37 @@ namespace Tau
 
             await Task.Delay(-1);
         }
-        // i feel ashamed i can't make the next two task functions into one, i gotta get good
-        static async Task UpdateGlobalCommands(string? AApplicationID, string? ABotToken)
+        
+        // Clears old commands from slashcommand handler.
+        static async Task UpdateCommands(string? applicationID, string? botToken, string? testGuildID = null)
         {
             using var httpClient = new HttpClient();
-            using var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + AApplicationID + "/commands");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ABotToken);
+            string url;
+            if (testGuildID == null)
+            {
+                url = "https://discord.com/api/v10/applications/" + applicationID + "/commands";
+            }
+            else
+            {
+                url = "https://discord.com/api/v10/applications/" + applicationID + "/guilds/" + testGuildID + "/commands";
+            }
+
+            using var request = new HttpRequestMessage(new HttpMethod("PUT"), url);
+            request.Headers.TryAddWithoutValidation("Authorization", "Bot " + botToken);
 
             request.Content = new StringContent("[]");
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
             var response = await httpClient.SendAsync(request);
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Cleared Global Commands");
-            Console.ResetColor();
-        }
-        static async Task UpdateTestGuildCommands(string? AAplicationID, string? ABotToken, string? ATestGuildID)
-        {
-            using var httpClient = new HttpClient();
-            using var request = new HttpRequestMessage(new HttpMethod("PUT"), "https://discord.com/api/v10/applications/" + AAplicationID + "/guilds/" + ATestGuildID + "/commands");
-            request.Headers.TryAddWithoutValidation("Authorization", "Bot " + ABotToken);
-
-            request.Content = new StringContent("[]");
-            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
-            var response = await httpClient.SendAsync(request);
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Cleared Guild Commands");
+            if (testGuildID == null)
+            {
+                Console.WriteLine("Cleared Global Commands");
+            }
+            else
+            {
+                Console.WriteLine("Cleared Guild Commands");
+            }
             Console.ResetColor();
         }
     }
