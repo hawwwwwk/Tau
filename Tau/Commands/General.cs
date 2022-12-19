@@ -1,5 +1,7 @@
 ﻿using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
+using System.Buffers;
 
 // todo, seperate slash command groups (not [slashcommandgroup] they suck) into seperate files, basically abstract a lil.
 
@@ -25,29 +27,6 @@ namespace Tau.Commands
 #endif
                 .Build();
             await ctx.CreateResponseAsync(eb, false);
-        }
-
-        [SlashCommand("rps", "Plays rock paper scissors with Tau!")]
-        public static async Task RPSCommand(InteractionContext ctx)
-        {
-            var emojis = new Dictionary<string, DiscordEmoji>
-                {
-                    { "rock", DiscordEmoji.FromName(ctx.Client, ":rock:") },
-                    { "paper", DiscordEmoji.FromName(ctx.Client, ":page_facing_up:") },
-                    { "scissors", DiscordEmoji.FromName(ctx.Client, ":scissors:") }
-                };
-
-            var eb = new DiscordEmbedBuilder()
-                .WithColor(DiscordColor.Aquamarine)
-                .WithTitle("Rock, paper, scissors!")
-                .Build();
-            var buttons = new List<DiscordButtonComponent>();
-            foreach (var emoji in emojis)
-            {
-                buttons.Add(new DiscordButtonComponent(DSharpPlus.ButtonStyle.Primary, emoji.Key, $"{emoji.Value}"));
-            }
-
-            await ctx.CreateResponseAsync("", embed: eb);
         }
     }
 }
