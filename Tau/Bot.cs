@@ -26,7 +26,7 @@ namespace Tau
 
             if (ConfigInfo == null)
             {
-                Console.WriteLine("Is there a config file?");
+                Console.WriteLine("Is there a config file? Program exiting now.");
                 Console.ReadLine();
                 Environment.Exit(1);
             }
