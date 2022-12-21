@@ -20,9 +20,9 @@ namespace Tau.Commands
                 .AddField("Very special thanks:", "A huge thank you to everyone in the [DSharpPlus Discord Server](https://discord.gg/dsharpplus) for helping me learn this library, and thanks to [Nimrod](https://discord.gg/vSmKPNd4) for letting me host on their servers.")
                 .AddField("Questions? Comments?", "If you're having any issues with Tau or have a suggestion, join our [Support Server](https://discord.gg/EatSTE2u)!")
 #if DEBUG
-                .WithFooter($"Tau {}, Beta Branch") // todo: automate the changing of this lol
+                .WithFooter($"Tau v0.0.4, Beta Branch") // todo: automate the changing of this lol
 #else
-                .WithFooter("Tau v0.0.31")
+                .WithFooter("Tau v0.0.4")
 #endif
                 .Build();
             await ctx.CreateResponseAsync(eb, false);

@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tau", "Tau\Tau.csproj", "{A512FAAB-ACD7-4A3F-A71A-2EC1C8072DBE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tau.DAL", "Tau.DAL", "{586CAA24-A04B-458A-937F-0E4C42FDDCE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tau.DAL", "Tau.DAL\Tau.DAL.csproj", "{BB3A4C5E-C947-451E-9EEF-1A90A755883E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{A512FAAB-ACD7-4A3F-A71A-2EC1C8072DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A512FAAB-ACD7-4A3F-A71A-2EC1C8072DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A512FAAB-ACD7-4A3F-A71A-2EC1C8072DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB3A4C5E-C947-451E-9EEF-1A90A755883E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB3A4C5E-C947-451E-9EEF-1A90A755883E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB3A4C5E-C947-451E-9EEF-1A90A755883E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB3A4C5E-C947-451E-9EEF-1A90A755883E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB3A4C5E-C947-451E-9EEF-1A90A755883E} = {586CAA24-A04B-458A-937F-0E4C42FDDCE3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1E5FD8B-6636-4D93-A695-24A2E0D43391}
