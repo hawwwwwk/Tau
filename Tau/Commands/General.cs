@@ -1,7 +1,5 @@
 ﻿using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
-using System.Buffers;
 
 // todo, seperate slash command groups (not [slashcommandgroup] they suck) into seperate files, basically abstract a lil.
 
@@ -25,6 +23,17 @@ namespace Tau.Commands
 #else
                 .WithFooter("Tau v0.0.31")
 #endif
+                .Build();
+            await ctx.CreateResponseAsync(eb, false);
+        }
+        [SlashCommand("uptime", "Shows how long Tau has been online.")]
+        public async Task UptimeCommand(InteractionContext ctx)
+        {
+            var delta = DateTime.Now - Bot.startTime;
+            var eb = new DiscordEmbedBuilder()
+                .WithColor(DiscordColor.Aquamarine)
+                .AddField("Uptime",$"Tau has been online for `{delta} (h:m:s:ms)`")
+
                 .Build();
             await ctx.CreateResponseAsync(eb, false);
         }

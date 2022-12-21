@@ -1,6 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Tau.Config;
@@ -9,6 +10,7 @@ namespace Tau
 {
     public class Bot
     {
+        public static DateTime startTime = DateTime.Now;
         static void Main(string[] args)
         {
             MainAsync().GetAwaiter().GetResult();
@@ -28,7 +30,6 @@ namespace Tau
                 Console.ReadLine();
                 Environment.Exit(1);
             }
-
 
             await UpdateCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken);
             await UpdateCommands(ConfigInfo.ApplicationID, ConfigInfo.BotToken, ConfigInfo.TestGuildID);
